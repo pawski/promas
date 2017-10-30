@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    config.vm.provider "virtualbox" do |v|
+        v.memory = 2072
+        v.cpus = 2
+    end
+  
+    config.vm.define "db" do |v|
+        v.vm.box = "oar-team/debian7"
+        v.vm.network :private_network, ip: "192.168.54.102"
+        v.vm.hostname = "db.promas.local"
+        v.hostsupdater.aliases = [
+            "db.promas.local"
+        ]
+        v.vm.provision :hosts do |provisioner|
+            provisioner.autoconfigure = true
+            provisioner.add_host '192.168.54.102', ['db.promas.local']
+        end
+        v.vm.synced_folder ".", "/vagrant", type: "nfs"
+        v.vm.provision "shell", path: "provision-db.sh"
+    end
+
+    config.vm.define "www" do |v|
+        v.vm.box = "oar-team/debian8"
+        v.vm.network :private_network, ip: "192.168.54.101"
+        v.vm.hostname = "promas.local"
+        v.hostsupdater.aliases = [
+           "promas.local"
+       ]
+        v.vm.provision :hosts do |provisioner|
+           provisioner.autoconfigure = true
+           provisioner.add_host '192.168.54.102', ['db.promas.local']
+           provisioner.add_host '192.168.54.101', ['promas.local']
+        end
+        v.vm.synced_folder "../promas", "/var/www", type: "nfs"
+        v.vm.synced_folder ".", "/vagrant", type: "nfs"
+
+        v.vm.provision "shell", path: "provision-www.sh"
+    end
+
+    config.vm.define "build" do |v|
+        v.vm.box = "oar-team/debian8"
+        v.vm.network :private_network, ip: "192.168.54.103"
+        v.vm.synced_folder "../promas", "/home/vagrant/promas", type: "nfs"
+        v.vm.synced_folder "../tools", "/home/vagrant/promas-tools", type: "nfs"
+        v.vm.synced_folder ".", "/vagrant", type: "nfs"
+
+        v.vm.provision "shell", path: "provision-build.sh"
+    end
+end

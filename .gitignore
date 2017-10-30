@@ -1,0 +1,24 @@
+## Directory-based project format:
+.idea/
+
+# Vagrant machine
+vm*/.vagrant
+vm*/*.box
+
+# Bootstrap
+promas/app/bootstrap*
+
+# Symfony directories
+promas/vendor/*
+promas/app/logs/*
+promas/app/cache/*
+promas/web/uploads/*
+promas/web/bundles/*
+promas/bin/*
+
+# Configuration files
+promas/app/config/parameters.ini
+promas/app/config/parameters.yml
+promas/app/SymfonyRequirements.php
+
+*.php~
