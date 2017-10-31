@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   
     config.vm.define "db" do |v|
-        v.vm.box = "oar-team/debian7"
+        v.vm.box = "promas/db"
         v.vm.network :private_network, ip: "192.168.54.102"
         v.vm.hostname = "db.promas.local"
         v.hostsupdater.aliases = [
@@ -23,11 +23,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             provisioner.add_host '192.168.54.102', ['db.promas.local']
         end
         v.vm.synced_folder ".", "/vagrant", type: "nfs"
-        v.vm.provision "shell", path: "provision-db.sh"
+        v.vm.provision "shell", path: "provision-db-box.sh"
     end
 
     config.vm.define "www" do |v|
-        v.vm.box = "oar-team/debian8"
+        v.vm.box = "promas/www"
         v.vm.network :private_network, ip: "192.168.54.101"
         v.vm.hostname = "promas.local"
         v.hostsupdater.aliases = [
@@ -41,6 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.vm.synced_folder "../promas", "/var/www", type: "nfs"
         v.vm.synced_folder ".", "/vagrant", type: "nfs"
 
-        v.vm.provision "shell", path: "provision-www.sh"
+        v.vm.provision "shell", path: "provision-www-box.sh"
     end
+
 end
