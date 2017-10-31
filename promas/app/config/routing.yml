@@ -1,1 +1,3 @@
-app:
+web:
+    resource: '@PromasWebBundle/Resources/config/routing.yml'
+    prefix: /

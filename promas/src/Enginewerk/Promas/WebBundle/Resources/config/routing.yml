@@ -1,0 +1,5 @@
+index:
+    path: /
+    methods: [GET]
+    defaults: { _controller: PromasWebBundle:Default:index }
+
