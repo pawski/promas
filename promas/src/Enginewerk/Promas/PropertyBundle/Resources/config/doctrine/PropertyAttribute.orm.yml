@@ -1,0 +1,30 @@
+Enginewerk\Promas\PropertyBundle\Entity\PropertyAttribute:
+    repositoryClass: Enginewerk\Promas\PropertyBundle\Repository\Doctrine\PropertyAttributeRepository
+    type: entity
+    table: 'property_attribute'
+    id:
+        id:
+            type: bigint
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            column: name
+            type: string
+            nullable: false
+
+        value:
+            column: value
+            type: string
+            nullable: true
+
+    manyToOne:
+        property:
+            targetEntity: Property
+            inversedBy: propertyAttributes
+            joinColumn:
+                name: property_id
+                referencedColumnName: id
+                onDelete: CASCADE

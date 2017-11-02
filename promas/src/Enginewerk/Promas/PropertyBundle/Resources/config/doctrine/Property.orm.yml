@@ -1,0 +1,64 @@
+Enginewerk\Promas\PropertyBundle\Entity\Property:
+    repositoryClass: Enginewerk\Promas\PropertyBundle\Repository\Doctrine\PropertyRepository
+    type: entity
+    table: 'property'
+    id:
+        id:
+            type: integer
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    fields:
+        identifier:
+            column: identifier
+            type: string
+            nullable: false
+
+        area:
+            column: area
+            type: integer
+            unsigned: true
+            nullable: false
+
+        price:
+            column: price
+            type: integer
+            unsigned: true
+            nullable: true
+
+        type:
+            column: type
+            type: string
+            nullable: false
+
+        floor:
+            column: floor
+            type: integer
+            unsigned: false
+            nullable: false
+
+        createdAt:
+            column: created_at
+            type: datetime
+            nullable: false
+
+        updatedAt:
+            column: updated_at
+            type: datetime
+            nullable: false
+
+    manyToOne:
+        investment:
+            targetEntity: Investment
+            inversedBy: properties
+            joinColumn:
+                name: investment_id
+                referencedColumnName: id
+                onDelete: RESTRICT
+
+    oneToMany:
+        propertyAttributes:
+            targetEntity: PropertyAttribute
+            mappedBy: property
+            fetch: EXTRA_LAZY

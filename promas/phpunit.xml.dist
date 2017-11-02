@@ -2,7 +2,7 @@
 
 <!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.2/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
@@ -13,8 +13,8 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Unit tests">
+            <directory>src/Enginewerk/Promas/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -22,9 +22,9 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*/*Bundle/Resources</directory>
-                <directory>src/*/Bundle/*Bundle/Resources</directory>
+                <directory>src/Enginewerk/Promas/*Bundle/Resources</directory>
+                <directory>src/Enginewerk/Promas/*/*Bundle/Resources</directory>
+                <directory>src/Enginewerk/Promas/*/Bundle/*Bundle/Resources</directory>
             </exclude>
         </whitelist>
     </filter>
