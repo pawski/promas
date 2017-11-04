@@ -10,7 +10,7 @@ use Enginewerk\Promas\PropertyBundle\Repository\InvestmentFinderInterface;
 use Enginewerk\Promas\PropertyBundle\Repository\PropertyFinderInterface;
 use Enginewerk\Promas\PropertyBundle\Repository\PropertyRepositoryInterface;
 
-class PropertyService
+class PropertyService implements CreateAndUpdatePropertyInterface
 {
     /** @var InvestmentFinderInterface */
     private $investmentFinder;

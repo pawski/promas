@@ -2,7 +2,9 @@ services:
     enginewerk_promas_property.service.property_manager_service:
         class: Enginewerk\Promas\PropertyBundle\Service\PropertyManagerService
         public: true
-        arguments: ['@enginewerk_promas_property.property_service.investment_service']
+        arguments:
+            - '@enginewerk_promas_property.property_service.investment_service'
+            - '@enginewerk_promas_property.property_service.property_service'
 
     enginewerk_promas_property.property_service.investment_service:
         class: Enginewerk\Promas\PropertyBundle\Property\Service\InvestmentService
@@ -14,7 +16,7 @@ services:
 
     enginewerk_promas_property.property_service.property_service:
         class: Enginewerk\Promas\PropertyBundle\Property\Service\PropertyService
-        public: true
+        public: false
         arguments:
             - '@enginewerk_promas_property.repository_doctrine.investment_repository'
             - '@enginewerk_promas_property.repository_doctrine.property_repository'

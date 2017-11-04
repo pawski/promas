@@ -1,0 +1,5 @@
+services:
+    enginewerk_promas_import.service.xl_import_service:
+        class: Enginewerk\Promas\ImportBundle\Service\XlImportService
+        public: true
+        arguments: ['@enginewerk_promas_property.service.property_manager_service']
