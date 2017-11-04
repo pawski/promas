@@ -8,7 +8,7 @@ use Enginewerk\Promas\PropertyBundle\Entity\Investment;
 use Enginewerk\Promas\PropertyBundle\Property\Command\CreateInvestmentCommand;
 use Enginewerk\Promas\PropertyBundle\Repository\InvestmentRepositoryInterface;
 
-class InvestmentService
+class InvestmentService implements CreateInvestmentInterface
 {
     /** @var InvestmentRepositoryInterface */
     private $investmentRepository;
