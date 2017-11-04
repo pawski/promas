@@ -7,82 +7,52 @@ use Doctrine\Common\Collections\Collection;
 
 class Property
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $identifier;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $area;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $price;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $floor;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var boolean */
+    private $available;
+
+    /** @var \DateTime */
     private $createdAt;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     private $updatedAt;
 
-    /**
-     * @var Investment
-     */
+    /** @var Investment */
     private $investment;
 
-    /**
-     * @var Collection
-     */
+    /** @var integer */
+    private $roomNumber;
+
+    /** @var Collection */
     private $propertyAttributes;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->propertyAttributes = new ArrayCollection();
     }
 
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set identifier
-     *
-     * @param string $identifier
-     *
-     * @return Property
-     */
     public function setIdentifier(string $identifier)
     {
         $this->identifier = $identifier;
@@ -90,23 +60,11 @@ class Property
         return $this;
     }
 
-    /**
-     * Get identifier
-     *
-     * @return string
-     */
     public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * Set area
-     *
-     * @param integer $area
-     *
-     * @return Property
-     */
     public function setArea(int $area)
     {
         $this->area = $area;
@@ -114,23 +72,11 @@ class Property
         return $this;
     }
 
-    /**
-     * Get area
-     *
-     * @return integer
-     */
     public function getArea(): int
     {
         return $this->area;
     }
 
-    /**
-     * Set price
-     *
-     * @param integer $price
-     *
-     * @return Property
-     */
     public function setPrice(int $price)
     {
         $this->price = $price;
@@ -138,95 +84,47 @@ class Property
         return $this;
     }
 
-    /**
-     * Get price
-     *
-     * @return integer
-     */
     public function getPrice():? int
     {
         return $this->price;
     }
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Property
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Property
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * Set investment
-     *
-     * @param Investment $investment
-     *
-     * @return Property
-     */
-    public function setInvestment(Investment $investment = null)
+    public function setInvestment(Investment $investment = null): Property
     {
         $this->investment = $investment;
 
         return $this;
     }
 
-    /**
-     * Get investment
-     *
-     * @return Investment
-     */
     public function getInvestment(): Investment
     {
         return $this->investment;
     }
 
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Property
-     */
     public function setType(string $type)
     {
         $this->type = $type;
@@ -234,23 +132,11 @@ class Property
         return $this;
     }
 
-    /**
-     * Get type
-     *
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * Set floor
-     *
-     * @param int $floor
-     *
-     * @return Property
-     */
     public function setFloor(int $floor)
     {
         $this->floor = $floor;
@@ -258,43 +144,47 @@ class Property
         return $this;
     }
 
-    /**
-     * Get floor
-     *
-     * @return int
-     */
     public function getFloor(): int
     {
         return $this->floor;
     }
 
-    /**
-     * Add propertyAttribute
-     *
-     * @param PropertyAttribute $propertyAttribute
-     */
     public function addPropertyAttribute(PropertyAttribute $propertyAttribute)
     {
         $this->propertyAttributes->add($propertyAttribute);
     }
 
-    /**
-     * Remove propertyAttribute
-     *
-     * @param PropertyAttribute $propertyAttribute
-     */
     public function removePropertyAttribute(PropertyAttribute $propertyAttribute)
     {
         $this->propertyAttributes->removeElement($propertyAttribute);
     }
 
-    /**
-     * Get propertyAttributes
-     *
-     * @return ArrayCollection
-     */
     public function getPropertyAttributes(): ArrayCollection
     {
         return $this->propertyAttributes;
+    }
+
+    public function setAvailable(bool $available)
+    {
+        $this->available = $available;
+
+        return $this;
+    }
+
+    public function getAvailable(): bool
+    {
+        return $this->available;
+    }
+
+    public function setRoomNumber(int $roomNumber)
+    {
+        $this->roomNumber = $roomNumber;
+
+        return $this;
+    }
+
+    public function getRoomNumber(): int
+    {
+        return $this->roomNumber;
     }
 }

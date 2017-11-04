@@ -21,6 +21,12 @@ Enginewerk\Promas\PropertyBundle\Entity\Property:
             unsigned: true
             nullable: false
 
+        roomNumber:
+            column: room_number
+            type: integer
+            unsigned: true
+            nullable: false
+
         price:
             column: price
             type: integer
@@ -37,6 +43,12 @@ Enginewerk\Promas\PropertyBundle\Entity\Property:
             type: integer
             unsigned: false
             nullable: false
+
+        available:
+            column: available
+            type: boolean
+            nullable: false
+            default: true
 
         createdAt:
             column: created_at

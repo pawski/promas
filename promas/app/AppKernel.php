@@ -10,6 +10,8 @@ class AppKernel extends Kernel
         $bundles = [
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Enginewerk\Promas\CommonBundle\PromasCommonBundle(),
+            new Enginewerk\Promas\ImportBundle\PromasImportBundle(),
             new Enginewerk\Promas\MigrationBundle\PromasMigrationBundle(),
             new Enginewerk\Promas\PropertyBundle\PromasPropertyBundle(),
             new Enginewerk\Promas\WebBundle\PromasWebBundle(),

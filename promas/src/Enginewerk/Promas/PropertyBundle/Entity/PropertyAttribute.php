@@ -107,4 +107,3 @@ class PropertyAttribute
         return $this->property;
     }
 }
-

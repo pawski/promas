@@ -1,0 +1,30 @@
+services:
+    enginewerk_promas_property.property_service.investment_service:
+        class: Enginewerk\Promas\PropertyBundle\Property\Service\InvestmentService
+        public: true
+        arguments:
+            - '@enginewerk_promas_property.repository_doctrine.investment_repository'
+            - '@enginewerk_promas_common.uuid.uuid_generator.version_4'
+            - '@enginewerk_promas_common.service.date_time_reader_service'
+
+    enginewerk_promas_property.property_service.property_service:
+        class: Enginewerk\Promas\PropertyBundle\Property\Service\PropertyService
+        public: true
+        arguments:
+            - '@enginewerk_promas_property.repository_doctrine.investment_repository'
+            - '@enginewerk_promas_property.repository_doctrine.property_repository'
+            - '@enginewerk_promas_property.repository_doctrine.property_repository'
+            - '@enginewerk_promas_common.service.date_time_reader_service'
+
+
+    enginewerk_promas_property.repository_doctrine.investment_repository:
+        class: Enginewerk\Promas\PropertyBundle\Repository\Doctrine\InvestmentRepository
+        public: false
+        factory:   ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments: [Enginewerk\Promas\PropertyBundle\Entity\Investment]
+
+    enginewerk_promas_property.repository_doctrine.property_repository:
+        class: Enginewerk\Promas\PropertyBundle\Repository\Doctrine\PropertyRepository
+        public: false
+        factory:   ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments: [Enginewerk\Promas\PropertyBundle\Entity\Property]

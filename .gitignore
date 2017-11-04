@@ -22,3 +22,5 @@ promas/app/config/parameters.yml
 promas/app/SymfonyRequirements.php
 
 *.php~
+/vm-run/guest-shared-storage/*.log
+!/vm-run/guest-shared-storage/.gitkeep
