@@ -33,17 +33,7 @@ class XlImportService
 
         /** @var PromasProperty $promasProperty */
         foreach ($promasCollection as $promasProperty) {
-            $property = new Property(
-                $promasProperty->getInvestment(),
-                $promasProperty->getIdentifier(),
-                (int) ($promasProperty->getArea() * 100),
-                $promasProperty->getPrice(),
-                $promasProperty->getType(),
-                0,
-                $promasProperty->getRoom(),
-                $promasProperty->isAvailable()
-            );
-
+            $property = $this->createProperty($promasProperty);
             $this->propertyManager->createProperty($property);
         }
     }
@@ -63,26 +53,29 @@ class XlImportService
 
         /** @var PromasProperty $promasProperty */
         foreach ($promasCollection as $promasProperty) {
-            $property = new Property(
-                $promasProperty->getInvestment(),
-                $promasProperty->getIdentifier(),
-                (int) ($promasProperty->getArea() * 100),
-                $promasProperty->getPrice(),
-                $promasProperty->getType(),
-                0,
-                $promasProperty->getRoom(),
-                $promasProperty->isAvailable()
-            );
-
+            $property = $this->createProperty($promasProperty);
             $collectionByInvestment[$promasProperty->getInvestment()][] = $property;
         }
 
         foreach ($collectionByInvestment as $investmentName => $properties) {
-            $this->propertyManager->updateProperty(
+            $this->propertyManager->propertyDifferentialUpdate(
                 new Investment($investmentName),
                 new PropertyCollection($properties)
             );
-            //break;
         }
+    }
+
+    private function createProperty(PromasProperty $promasProperty): Property
+    {
+        return new Property(
+            $promasProperty->getInvestment(),
+            $promasProperty->getIdentifier(),
+            (int)($promasProperty->getArea() * 100),
+            $promasProperty->getPrice(),
+            $promasProperty->getType(),
+            0,
+            $promasProperty->getRoom(),
+            $promasProperty->isAvailable()
+        );
     }
 }

@@ -22,16 +22,16 @@ class PropertyManagerService
     private $propertyService;
 
     /** @var PropertyUpdateService */
-    private $propertyBulkUpdate;
+    private $propertyUpdateService;
 
     public function __construct(
         CreateInvestmentInterface $investmentService,
         CreateAndUpdatePropertyInterface $propertyService,
-        PropertyUpdateService $propertyBulkUpdate
+        PropertyUpdateService $propertyUpdateService
     ) {
         $this->investmentService = $investmentService;
         $this->propertyService = $propertyService;
-        $this->propertyBulkUpdate = $propertyBulkUpdate;
+        $this->propertyUpdateService = $propertyUpdateService;
     }
 
     public function createInvestment(Investment $investment): void
@@ -55,7 +55,7 @@ class PropertyManagerService
         ));
     }
 
-    public function updateProperty(Investment $investment, PropertyCollection $propertyCollection): void
+    public function propertyDifferentialUpdate(Investment $investment, PropertyCollection $propertyCollection): void
     {
         $updatePropertyCommandCollection = new UpdatePropertyCommandCollection();
 
@@ -72,6 +72,6 @@ class PropertyManagerService
             ));
         }
 
-        $this->propertyBulkUpdate->updateProperty($investment, $updatePropertyCommandCollection);
+        $this->propertyUpdateService->diffUpdate($investment, $updatePropertyCommandCollection);
     }
 }

@@ -43,7 +43,7 @@ class PropertyUpdateService
         $this->dateTimeReader = $dateTimeReader;
     }
 
-    public function updateProperty(Investment $investment, UpdatePropertyCommandCollection $propertyCommandCollection): void
+    public function diffUpdate(Investment $investment, UpdatePropertyCommandCollection $propertyCommandCollection): void
     {
         $this->getLogger()->info('Running investment update', ['investment' => $investment->getInvestmentName()]);
         $investmentEntity = $this->investmentFinder->getByName($investment->getInvestmentName());
@@ -52,13 +52,12 @@ class PropertyUpdateService
 
         /** @var Property $property */
         foreach ($propertyCollection as $property) {
-            $this->getLogger()->debug(
-                'Find property in updateCollection',
-                ['identifier' => $property->getIdentifier()]
-            );
-
             $propertyUpdateCommand = $this->findByIdentifier($property->getIdentifier(), $propertyCommandCollection);
             if (null === $propertyUpdateCommand) {
+                $this->getLogger()->debug(
+                    'Can\'t find property in updateCollection',
+                    ['identifier' => $property->getIdentifier()]
+                );
                 continue;
             }
 
@@ -109,11 +108,17 @@ class PropertyUpdateService
                 $result = array_pop($result);
                 break;
             case 1:
-                $this->getLogger()->warning('Unexpected result, greater than 1', ['query' => $identifier, $result]);
+                $this->getLogger()->warning(
+                    'More than one Property in updateCollection with same identifier',
+                    ['query' => $identifier, 'collectionSize' => $propertyCommandCollection->count(), 'result' => $result]
+                );
                 $result = array_pop($result);
                 break;
             case -1:
-                $this->getLogger()->warning('Unexpected result, less than 1', ['query' => $identifier]);
+                $this->getLogger()->warning(
+                    'Missing Property in updateCollection',
+                    ['query' => $identifier, 'collectionSize' => $propertyCommandCollection->count()]
+                );
                 $result = null;
                 break;
         }
