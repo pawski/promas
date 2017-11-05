@@ -2,13 +2,16 @@
 declare(strict_types=1);
 namespace Enginewerk\Promas\PropertyBundle\Service;
 
-use Enginewerk\Promas\ImportBundle\Xl\Model\PromasProperty;
 use Enginewerk\Promas\PropertyBundle\Model\Investment;
 use Enginewerk\Promas\PropertyBundle\Model\Property;
+use Enginewerk\Promas\PropertyBundle\Model\PropertyCollection;
 use Enginewerk\Promas\PropertyBundle\Property\Command\CreateInvestmentCommand;
 use Enginewerk\Promas\PropertyBundle\Property\Command\CreatePropertyCommand;
+use Enginewerk\Promas\PropertyBundle\Property\Command\UpdatePropertyCommand;
+use Enginewerk\Promas\PropertyBundle\Property\Command\UpdatePropertyCommandCollection;
 use Enginewerk\Promas\PropertyBundle\Property\Service\CreateAndUpdatePropertyInterface;
 use Enginewerk\Promas\PropertyBundle\Property\Service\CreateInvestmentInterface;
+use Enginewerk\Promas\PropertyBundle\Property\Service\PropertyUpdateService;
 
 class PropertyManagerService
 {
@@ -18,12 +21,17 @@ class PropertyManagerService
     /** @var CreateAndUpdatePropertyInterface */
     private $propertyService;
 
+    /** @var PropertyUpdateService */
+    private $propertyBulkUpdate;
+
     public function __construct(
         CreateInvestmentInterface $investmentService,
-        CreateAndUpdatePropertyInterface $propertyService
+        CreateAndUpdatePropertyInterface $propertyService,
+        PropertyUpdateService $propertyBulkUpdate
     ) {
         $this->investmentService = $investmentService;
         $this->propertyService = $propertyService;
+        $this->propertyBulkUpdate = $propertyBulkUpdate;
     }
 
     public function createInvestment(Investment $investment): void
@@ -45,5 +53,25 @@ class PropertyManagerService
             $property->getRoomNumber(),
             $property->isAvailable()
         ));
+    }
+
+    public function updateProperty(Investment $investment, PropertyCollection $propertyCollection): void
+    {
+        $updatePropertyCommandCollection = new UpdatePropertyCommandCollection();
+
+        foreach ($propertyCollection as $property) {
+            $updatePropertyCommandCollection->add(new UpdatePropertyCommand(
+                $property->getInvestmentName(),
+                $property->getIdentifier(),
+                $property->getArea(),
+                $property->getPrice(),
+                $property->getType(),
+                $property->getFloor(),
+                $property->getRoomNumber(),
+                $property->isAvailable()
+            ));
+        }
+
+        $this->propertyBulkUpdate->updateProperty($investment, $updatePropertyCommandCollection);
     }
 }

@@ -60,7 +60,7 @@ class PropertyService implements CreateAndUpdatePropertyInterface
     public function updateProperty(UpdatePropertyCommand $updatePropertyCommand): void
     {
         $investment = $this->investmentFinder->getByName($updatePropertyCommand->getInvestmentName());
-        $property = $this->propertyFinder->getByIdentifierAndInvestment(
+        $property = $this->propertyFinder->getByIdentifierAndInvestmentId(
             $updatePropertyCommand->getIdentifier(),
             $investment->getId()
         );

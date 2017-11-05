@@ -7,9 +7,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ImportXlCommand extends AbstractCommand
+class UpdateXlCommand extends AbstractCommand
 {
-    const COMMAND_NAME = 'promas:import:xl';
+    const COMMAND_NAME = 'promas:update:xl';
     const ARGUMENT_SOURCE = 'source';
 
     protected function configure()
@@ -27,6 +27,6 @@ class ImportXlCommand extends AbstractCommand
         $struct = \GuzzleHttp\json_decode($requestData, false);
         $this->getContainer()
             ->get('enginewerk_promas_import.service.xl_import_service')
-            ->importFromJson($struct);
+            ->updateFromJson($struct);
     }
 }

@@ -99,6 +99,8 @@ class XlIdentifierTransformer
 
     private function fixFormat(string $identifier): string
     {
+        $identifier = trim($identifier, '_');
+
         if (array_key_exists($identifier, self::$fixMapping)) {
             $identifier = self::$fixMapping[$identifier];
         }

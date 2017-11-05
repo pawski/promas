@@ -6,7 +6,9 @@ use Enginewerk\Promas\ImportBundle\Xl\Model\PromasProperty;
 use Enginewerk\Promas\ImportBundle\Xl\Transformer\JsonToCollectionTransformer;
 use Enginewerk\Promas\ImportBundle\Xl\Transformer\XlIdentifierTransformer;
 use Enginewerk\Promas\ImportBundle\Xl\Transformer\XlPropertyToPromasPropertyTransformer;
+use Enginewerk\Promas\PropertyBundle\Model\Investment;
 use Enginewerk\Promas\PropertyBundle\Model\Property;
+use Enginewerk\Promas\PropertyBundle\Model\PropertyCollection;
 use Enginewerk\Promas\PropertyBundle\Service\PropertyManagerService;
 
 class XlImportService
@@ -42,8 +44,45 @@ class XlImportService
                 $promasProperty->isAvailable()
             );
 
-            echo $property->getIdentifier() . PHP_EOL;
             $this->propertyManager->createProperty($property);
+        }
+    }
+
+    public function updateFromJson(\stdClass $decodedCollection)
+    {
+        $collection = (new JsonToCollectionTransformer())->transform($decodedCollection);
+
+        $xlTransformer = new XlPropertyToPromasPropertyTransformer(new XlIdentifierTransformer());
+        $promasCollection = $xlTransformer->toPromasPropertyCollection($collection);
+
+        $collectionByInvestment = [];
+        /** @var PromasProperty $promasProperty */
+        foreach ($promasCollection as $promasProperty) {
+            $collectionByInvestment[$promasProperty->getInvestment()] = [];
+        }
+
+        /** @var PromasProperty $promasProperty */
+        foreach ($promasCollection as $promasProperty) {
+            $property = new Property(
+                $promasProperty->getInvestment(),
+                $promasProperty->getIdentifier(),
+                (int) ($promasProperty->getArea() * 100),
+                $promasProperty->getPrice(),
+                $promasProperty->getType(),
+                0,
+                $promasProperty->getRoom(),
+                $promasProperty->isAvailable()
+            );
+
+            $collectionByInvestment[$promasProperty->getInvestment()][] = $property;
+        }
+
+        foreach ($collectionByInvestment as $investmentName => $properties) {
+            $this->propertyManager->updateProperty(
+                new Investment($investmentName),
+                new PropertyCollection($properties)
+            );
+            //break;
         }
     }
 }
