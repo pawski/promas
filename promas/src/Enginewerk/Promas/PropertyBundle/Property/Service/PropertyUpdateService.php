@@ -82,12 +82,46 @@ class PropertyUpdateService
 
     private function needsUpdate(Property $property, UpdatePropertyCommand $updatePropertyCommand): bool
     {
-        return $property->getAvailable() !== $updatePropertyCommand->isAvailable() ||
-            $property->getArea() !== $updatePropertyCommand->getArea() ||
-            $property->getFloor() !== $updatePropertyCommand->getFloor() ||
-            $property->getRoomNumber() !== $updatePropertyCommand->getRoomNumber() ||
-            $property->getType() !== $updatePropertyCommand->getType() ||
-            $property->getPrice() !== $updatePropertyCommand->getPrice();
+        $propertyFields = [
+            'available' => $property->getAvailable(),
+            'area' => $property->getArea(),
+            'floor' => $property->getFloor(),
+            'room' => $property->getRoomNumber(),
+            'type' => $property->getType(),
+            'price' => $property->getPrice(),
+        ];
+
+        $updateFields = [
+            'available' => $updatePropertyCommand->isAvailable(),
+            'area' => $updatePropertyCommand->getArea(),
+            'floor' => $updatePropertyCommand->getFloor(),
+            'room' => $updatePropertyCommand->getRoomNumber(),
+            'type' => $updatePropertyCommand->getType(),
+            'price' => $updatePropertyCommand->getPrice(),
+        ];
+
+        $fieldsToUpdate = array_diff($propertyFields, $updateFields);
+
+        $changes = [];
+        foreach ($fieldsToUpdate as $fileName => $value) {
+            $changes[$fileName] = [
+                'from' => $propertyFields[$fileName],
+                'to' => $updateFields[$fileName],
+            ];
+        }
+
+        if (count($changes)) {
+            $this->getLogger()->info(
+                'Property update',
+                [
+                    'investment' => $updatePropertyCommand->getInvestmentName(),
+                    'identifier' => $property->getIdentifier(),
+                    'changes' => $changes
+                ]
+            );
+        }
+
+        return (bool) count(array_diff($propertyFields, $updateFields));
     }
 
     private function findByIdentifier(
