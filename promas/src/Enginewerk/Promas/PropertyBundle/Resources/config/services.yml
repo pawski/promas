@@ -5,10 +5,10 @@ services:
         arguments:
             - '@enginewerk_promas_property.property_service.investment_service'
             - '@enginewerk_promas_property.property_service.property_service'
-            - '@enginewerk_promas_property.property_service.property_update_service'
+            - '@enginewerk_promas_property.property_service.property_diff_update_service'
 
-    enginewerk_promas_property.property_service.property_update_service:
-        class: Enginewerk\Promas\PropertyBundle\Property\Service\PropertyUpdateService
+    enginewerk_promas_property.property_service.property_diff_update_service:
+        class: Enginewerk\Promas\PropertyBundle\Property\Service\PropertyDiffUpdateService
         public: false
         arguments:
             - '@enginewerk_promas_property.repository_doctrine.property_repository'

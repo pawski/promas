@@ -10,14 +10,14 @@ Enginewerk\Promas\PropertyBundle\Entity\PropertyAttribute:
             generator:
                 strategy: AUTO
     fields:
-        name:
+        identifier:
             column: name
             type: string
             nullable: false
 
         value:
             column: value
-            type: string
+            type: text
             nullable: true
 
     manyToOne:

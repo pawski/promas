@@ -11,7 +11,7 @@ use Enginewerk\Promas\PropertyBundle\Property\Command\UpdatePropertyCommand;
 use Enginewerk\Promas\PropertyBundle\Property\Command\UpdatePropertyCommandCollection;
 use Enginewerk\Promas\PropertyBundle\Property\Service\CreateAndUpdatePropertyInterface;
 use Enginewerk\Promas\PropertyBundle\Property\Service\CreateInvestmentInterface;
-use Enginewerk\Promas\PropertyBundle\Property\Service\PropertyUpdateService;
+use Enginewerk\Promas\PropertyBundle\Property\Service\PropertyDiffUpdateService;
 
 class PropertyManagerService
 {
@@ -21,13 +21,13 @@ class PropertyManagerService
     /** @var CreateAndUpdatePropertyInterface */
     private $propertyService;
 
-    /** @var PropertyUpdateService */
+    /** @var PropertyDiffUpdateService */
     private $propertyUpdateService;
 
     public function __construct(
         CreateInvestmentInterface $investmentService,
         CreateAndUpdatePropertyInterface $propertyService,
-        PropertyUpdateService $propertyUpdateService
+        PropertyDiffUpdateService $propertyUpdateService
     ) {
         $this->investmentService = $investmentService;
         $this->propertyService = $propertyService;
@@ -72,6 +72,6 @@ class PropertyManagerService
             ));
         }
 
-        $this->propertyUpdateService->diffUpdate($investment, $updatePropertyCommandCollection);
+        $this->propertyUpdateService->update($investment, $updatePropertyCommandCollection);
     }
 }

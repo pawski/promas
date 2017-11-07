@@ -13,7 +13,7 @@ use Enginewerk\Promas\PropertyBundle\Repository\InvestmentFinderInterface;
 use Enginewerk\Promas\PropertyBundle\Repository\PropertyFinderInterface;
 use Enginewerk\Promas\PropertyBundle\Repository\PropertyRepositoryInterface;
 
-class PropertyUpdateService
+class PropertyDiffUpdateService
 {
     use HasLoggerTrait;
 
@@ -43,7 +43,7 @@ class PropertyUpdateService
         $this->dateTimeReader = $dateTimeReader;
     }
 
-    public function diffUpdate(Investment $investment, UpdatePropertyCommandCollection $propertyCommandCollection): void
+    public function update(Investment $investment, UpdatePropertyCommandCollection $propertyCommandCollection): void
     {
         $this->getLogger()->info('Running investment update', ['investment' => $investment->getInvestmentName()]);
         $investmentEntity = $this->investmentFinder->getByName($investment->getInvestmentName());
