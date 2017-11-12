@@ -14,6 +14,7 @@ class AppKernel extends Kernel
             new Enginewerk\Promas\ImportBundle\PromasImportBundle(),
             new Enginewerk\Promas\MigrationBundle\PromasMigrationBundle(),
             new Enginewerk\Promas\PropertyBundle\PromasPropertyBundle(),
+            new Enginewerk\Promas\SearchBundle\PromasSearchBundle(),
             new Enginewerk\Promas\WebBundle\PromasWebBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),

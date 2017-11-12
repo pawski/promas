@@ -1,3 +1,7 @@
 web:
     resource: '@PromasWebBundle/Resources/config/routing.yml'
     prefix: /
+
+search:
+    resource: '@PromasSearchBundle/Resources/config/routing.yml'
+    prefix: /finder

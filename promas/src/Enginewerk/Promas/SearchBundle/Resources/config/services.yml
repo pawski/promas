@@ -1,0 +1,10 @@
+services:
+    enginewerk_promas_search.service.finder_service:
+        class: Enginewerk\Promas\SearchBundle\Service\FinderService
+        public: true
+        arguments: ['@enginewerk_promas_search.finder_doctrine.finder']
+
+    enginewerk_promas_search.finder_doctrine.finder:
+        class: Enginewerk\Promas\SearchBundle\Finder\Doctrine\Finder
+        public: false
+        arguments: ['@doctrine.orm.default_entity_manager']

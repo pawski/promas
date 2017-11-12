@@ -1,0 +1,11 @@
+search-search:
+    path: /search
+    methods: [GET]
+    defaults:  { _controller: PromasSearchBundle:Search:search }
+
+search-investment:
+    path: /investment/{investment}
+    methods: [GET]
+    requirements:
+        investment: '[a-zA-Z0-9_-]+'
+    defaults:  { _controller: PromasSearchBundle:Search:investment }

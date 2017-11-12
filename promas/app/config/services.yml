@@ -2,6 +2,7 @@ imports:
     - { resource: '@PromasCommonBundle/Resources/config/services.yml' }
     - { resource: '@PromasImportBundle/Resources/config/services.yml' }
     - { resource: '@PromasPropertyBundle/Resources/config/services.yml' }
+    - { resource: '@PromasSearchBundle/Resources/config/services.yml' }
 
 parameters:
     #parameter_name: value
